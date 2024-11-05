@@ -36,7 +36,6 @@ library(changepoint)
 library(aTSA)
 library(MASS)
 library(readr)
-library(autoplot)
 
 ```
 
