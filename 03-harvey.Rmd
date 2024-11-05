@@ -86,7 +86,7 @@ autoplot(forex_diff) +
   theme_minimal()
 ```
 Después de la  primera diferenciación, se puede obtener que por cada tick quedó el valor del return (x-x_ant) ue es el resultado de la aplicación de la dirferenciaciónd e primer orden. Como se aprecia, la serie ya no tiene una tendencia sino que presenta un comportamiento estacionario, sinembargo, esta serie de tiempo parece ser menos predecible que la serie de tiempo antes de la diferenciación, ya que evidentemente tiene mayor desviación estándar y por tanto un mayor Coeficiente de Variación y un menor SNR.
-
+ 
 
 # Verificación de Estacionariedad en la Serie Diferenciada
 
