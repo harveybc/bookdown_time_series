@@ -1,0 +1,55 @@
+# **Método Holt Winters**
+
+El método de Holt Winters es utilizado para realizar predicciones de series de tiempo enpresencia de estacionalidad y tendencia. El método esta basado en un algoritmo iterativo que realiza un pronóstico sobre el comportamiento de la serie en base a promedios debidamente ponderados de los datos anteriores.
+
+Realizaremos la prediccion de nuestros serie basados en el metodo Holt Winters.
+
+```{r}
+install.packages("TSA")
+library(TSA)
+library(TTR)
+library(ggplot2)
+data <- read.csv("./EURUSD_ForexTrading_4hrs.csv")
+
+```
+
+```{r}
+
+data_clean <- na.omit(data)
+
+data_clean
+
+plot( x = as.POSIXct(data_clean$Gmt.time, format = "%d.%m.%Y %H:%M:%S"),y = data_clean$close)
+
+plot(x= as.POSIXct(data_clean$Gmt.time, format = "%d.%m.%Y %H:%M:%S"),data_clean$close)
+```
+
+Para el pronostico se trabajara con el metodo Holt Winter aditivo, es decir donde el error y la tendencia son aditivos.
+
+```{r}
+data_close <- data_clean$close
+data_close <- ts(data_close, frequency = 6, start = c(1,1))
+mod1<- HoltWinters(data_close, seasonal = "additive")
+plot(mod1)
+```
+
+El grafico se observa el resultado del metodo HoltWinters donde se genera una linea en color rojo,con una nueva serie de datos que se encuentran muy cerca de los datos originales. Se debe considerar que t que toda serie de tiempo tiene un componente normal, una constante, una tendencia y un componente estacional, de esta manera, para poder componer la serie de acuerdo a estas características procedemos a realizar lo siguiente:
+
+```{r}
+plot(fitted(mod1))
+```
+
+Como se puede, se puede visualizar en la gráfica la descomposición en estas cuatro partes que se mencionaron anteriormente.
+
+Ahora bien, algo muy importante que se puede realizar con la serie de tiempo y el método Holt Winters es PREDECIR, para ello generamos lo siguiente:
+
+```{r}
+pred=predict(mod1, 4, prediction.interval = TRUE)
+pred
+```
+
+El modelo de prediccion nos da:
+
+```{r}
+plot(mod1, pred)
+```
